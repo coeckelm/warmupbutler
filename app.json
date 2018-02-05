@@ -1,5 +1,4 @@
 {
-  "name": "Warm Up Butler",
-  "description": "Applciation to facilitate warm up events",
-  "addons": [ ]
+  "name": "Warm up Butler",
+  "description": "A barebones Java app, which can easily be deployed to Heroku.",
 }
