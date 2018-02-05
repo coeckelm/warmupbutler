@@ -31,7 +31,7 @@ public class WarmupbutlerapiApplication {
 
     @RequestMapping("/")
     String index() {
-        return "index";
+        return "index.html";
     }
 
 }
