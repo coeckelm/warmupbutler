@@ -19,7 +19,7 @@ import static javax.servlet.http.HttpServletResponse.SC_OK;
 @Api(tags = "butler")
 @Path("/api")
 @Produces(MediaType.APPLICATION_JSON)
-@Component
+//@Component
 public class HelloResource {
     @GET
     @Path("/hello")

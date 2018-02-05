@@ -65,8 +65,8 @@ public class WarmUpButlerApplication {
      * @param jerseyConfigMutators The mutator beans. Using List here to inject all mutators, no order is implied.
      * @return
      */
-    @Bean
-    @Lazy(false)
+//    @Bean
+//    @Lazy(false)
     public ResourceConfig jerseyResourceConfig(Optional<List<Consumer<ResourceConfig>>> jerseyConfigMutators) {
         final Consumer<ResourceConfig> combinedMutator =
                 resourceConfig -> {
