@@ -29,9 +29,4 @@ public class WarmupbutlerapiApplication {
         SpringApplication.run(WarmupbutlerapiApplication.class, args);
     }
 
-    @RequestMapping("/")
-    String index() {
-        return "index.html";
-    }
-
 }
