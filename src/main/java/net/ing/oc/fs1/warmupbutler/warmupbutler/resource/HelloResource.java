@@ -1,16 +1,13 @@
-package net.ing.oc.fs1.warmupbutler.warmupbutler.controller;
+package net.ing.oc.fs1.warmupbutler.warmupbutler.resource;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.glassfish.jersey.server.ManagedAsync;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
@@ -23,7 +20,7 @@ import static javax.servlet.http.HttpServletResponse.SC_OK;
 @Path("/api")
 @Produces(MediaType.APPLICATION_JSON)
 @Component
-public class ButlerController {
+public class HelloResource {
     @GET
     @Path("/hello")
     @ApiOperation(value = "Return a toggles'participation", response = String.class)

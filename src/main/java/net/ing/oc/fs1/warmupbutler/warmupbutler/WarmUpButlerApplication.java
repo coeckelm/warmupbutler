@@ -16,17 +16,32 @@
 
 package net.ing.oc.fs1.warmupbutler.warmupbutler;
 
+import com.google.common.reflect.ClassPath;
+import lombok.extern.slf4j.Slf4j;
+import net.ing.oc.fs1.warmupbutler.warmupbutler.config.JerseyResourceConfig;
+import org.glassfish.jersey.server.ResourceConfig;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.core.env.Environment;
 
+import java.io.IOException;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Consumer;
 
 @SpringBootApplication
+@Slf4j
 public class WarmUpButlerApplication {
+    private final String defaultBaseResourcePackagePath = getClass().getPackage().getName() + ".resource";
+
+    @Autowired
+    private Environment environment;
 
     public static void main(String[] args) throws Exception {
         SpringApplication.run(WarmUpButlerApplication.class, args);
@@ -63,6 +78,19 @@ public class WarmUpButlerApplication {
                 };
 
         return new JerseyResourceConfig(environment, combinedMutator, packagesToScan());
+    }
+
+    /**
+     * Set of package names that shall be scanned to register with Jersey. Defaults to:
+     * <p>
+     * <code>
+     * Set(  getClass().getPackage().getName() + ".resource"  )
+     * </code>
+     *
+     * @return Set of application-level packages to scan
+     */
+    protected Set<String> packagesToScan() {
+        return new HashSet<>(Collections.singletonList(baseResourcePackagePath()));
     }
 
     /**
