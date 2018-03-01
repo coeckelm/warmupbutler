@@ -30,17 +30,12 @@ public class RedisConfiguration {
         return jedisConFactory;
     }
 
-    @Bean
-    StringRedisSerializer stringRedisSerializer() {
-        StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
-        return stringRedisSerializer;
-    }
 
     @Bean
     public RedisTemplate<String, Object> redisTemplate() {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(jedisConnectionFactory());
-        template.setKeySerializer(stringRedisSerializer());
+        template.setKeySerializer(new StringRedisSerializer());
         return template;
     }
 
