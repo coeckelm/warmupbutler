@@ -1,6 +1,6 @@
 package net.ing.oc.fs1.warmupbutler.warmupbutler.config;
 
-import net.ing.oc.fs1.warmupbutler.warmupbutler.resource.HelloResource;
+import net.ing.oc.fs1.warmupbutler.warmupbutler.resource.EventResource;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.stereotype.Component;
 
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 public class JerseyConfig extends ResourceConfig {
 
     public JerseyConfig() {
-        register(HelloResource.class);
+        register(EventResource.class);
     }
 }
 
