@@ -6,7 +6,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Nullable;
+import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.Optional;
@@ -26,7 +26,7 @@ public class EventResource {
         Event event = (Event) values.get(eventId);
         Optional<Event> optionalEvent = Optional.ofNullable(event);
         if(optionalEvent.isPresent()) {
-            return "Event found " + optionalEvent.get().getEventName();
+            return "Event found " + optionalEvent.get().getDescription();
         }
         return "Event not found";
     }
@@ -35,11 +35,11 @@ public class EventResource {
     @POST
     @Path("/event")
     @Produces({MediaType.APPLICATION_JSON})
-    public String createEvent(Event event) {
+    public String createEvent(@Valid Event event) {
         ValueOperations values = redisTemplate.opsForValue();
         values.set(event.getEventId(), event);
 
-        return "Event created: " + event.getEventId();
+        return "Event created: " + event.getDescription();
     }
 
 

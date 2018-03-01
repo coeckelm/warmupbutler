@@ -24,7 +24,7 @@ public class EventResourceTest {
 
     @Test
     public void getEventTest_happyFlow() {
-        Event event = new Event("", "first event");
+        Event event = new Event("", "first event", null);
         ValueOperations valueOperations = Mockito.mock(ValueOperations.class);
         when(redisTemplate.opsForValue()).thenReturn(valueOperations);
         when(valueOperations.get(any())).thenReturn(event);
