@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
 public class RedisConfiguration {
@@ -30,9 +31,16 @@ public class RedisConfiguration {
     }
 
     @Bean
+    StringRedisSerializer stringRedisSerializer() {
+        StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
+        return stringRedisSerializer;
+    }
+
+    @Bean
     public RedisTemplate<String, Object> redisTemplate() {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(jedisConnectionFactory());
+        template.setKeySerializer(stringRedisSerializer());
         return template;
     }
 
