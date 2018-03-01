@@ -1,15 +1,15 @@
 package net.ing.oc.fs1.warmupbutler.warmupbutler;
 
-import net.ing.oc.fs1.warmupbutler.warmupbutler.resource.HelloResource;
+import net.ing.oc.fs1.warmupbutler.warmupbutler.resource.EventResource;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
-public class HelloResourceTest {
+public class EventResourceTest {
 
     @Test
     public void testApp() {
-        HelloResource helloResource = new HelloResource();
-        String result = helloResource.hello();
+        EventResource eventResource = new EventResource();
+        String result = eventResource.getEvent();
         assertEquals( result, "Hello from Butler" );
     }
 
