@@ -24,12 +24,12 @@ public class EventResourceTest {
 
     @Test
     public void getEventTest_happyFlow() {
-        Event event = new Event("", "first event", null);
+        Event event = new Event("1", "first event", null);
         ValueOperations valueOperations = Mockito.mock(ValueOperations.class);
         when(redisTemplate.opsForValue()).thenReturn(valueOperations);
         when(valueOperations.get(any())).thenReturn(event);
-        String result = sut.getEvent("");
-        assertEquals( result, "Event found first event" );
+        String result = sut.getEvent("1");
+        assertEquals( "Event found eventId: 1 | eventName: first event | eventDate: null" , result);
     }
 
 

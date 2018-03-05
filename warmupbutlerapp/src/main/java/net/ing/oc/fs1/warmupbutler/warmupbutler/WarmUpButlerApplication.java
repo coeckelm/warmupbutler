@@ -18,11 +18,13 @@ package net.ing.oc.fs1.warmupbutler.warmupbutler;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Controller;
 
 @SpringBootApplication
-@ComponentScan("net.ing.oc.fs1.warmupbutler.warmupbutler")
+@ComponentScan
 @Slf4j
 public class WarmUpButlerApplication {
 
