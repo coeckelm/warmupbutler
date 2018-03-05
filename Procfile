@@ -1,1 +1,1 @@
-web: java -jar target/warmupbutler-0.0.1-SNAPSHOT.jar
+web: java -jar warmupbutlerapp/target/warmupbutlerapp-0.0.1-SNAPSHOT.jar
