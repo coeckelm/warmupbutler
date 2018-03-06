@@ -98,6 +98,16 @@
 	</dependencies>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>../warmupbutlerweb</directory>
+				<targetPath>classes/static</targetPath>
+				<excludes>
+					<exclude>target</exclude>
+					<exclude>tools</exclude>
+				</excludes>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
