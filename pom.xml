@@ -25,6 +25,7 @@
   </properties>
 
   <modules>
+    <module>warmupbutlerweb</module>
     <module>warmupbutlerapp</module>
   </modules>
 </project>

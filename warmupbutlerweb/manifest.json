@@ -1,0 +1,6 @@
+{
+  "name": "warmupbutlerweb",
+  "short_name": "warmupbutlerweb",
+  "start_url": "/",
+  "display": "standalone"
+}

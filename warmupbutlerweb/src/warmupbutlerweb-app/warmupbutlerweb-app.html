@@ -1,0 +1,32 @@
+<link rel="import" href="../../node_modules/polymer/polymer-element.html">
+
+<dom-module id="warmupbutlerweb-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class WarmupbutlerwebApp extends Polymer.Element {
+      static get is() { return 'warmupbutlerweb-app'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'warmupbutlerweb-app'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(WarmupbutlerwebApp.is, WarmupbutlerwebApp);
+  </script>
+</dom-module>
