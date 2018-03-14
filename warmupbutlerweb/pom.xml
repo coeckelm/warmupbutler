@@ -25,21 +25,21 @@
                 <version>1.6</version>
                 <executions>
                     <execution>
-                        <id>install node and yarn</id>
+                        <id>install node and bower</id>
                         <goals>
-                            <goal>install-node-and-yarn</goal>
+                            <goal>install-node-and-npm</goal>
                         </goals>
                         <configuration>
                             <!-- See https://nodejs.org/en/download/ for latest node and npm (lts) versions -->
-                            <nodeVersion>v9.7.1</nodeVersion>
-                            <yarnVersion>v1.5.1</yarnVersion>
+                            <nodeVersion>v9.8.0</nodeVersion>
+                            <npmVersion>v5.6.0</npmVersion>
                             <installDirectory>tools</installDirectory>
                         </configuration>
                     </execution>
                     <execution>
-                        <id>run yarn install</id>
+                        <id>run npm install</id>
                         <goals>
-                            <goal>yarn</goal>
+                            <goal>npm</goal>
                         </goals>
 
                         <!-- optional: default phase is "generate-resources" -->
@@ -52,6 +52,23 @@
                             -->
                             <arguments>install</arguments>
                             <installDirectory>tools</installDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>run bower install</id>
+                        <goals>
+                            <goal>bower</goal>
+                        </goals>
+
+                        <!-- optional: default phase is "generate-resources" -->
+                        <phase>generate-resources</phase>
+
+                        <configuration>
+                            <!-- optional: The default argument is actually
+                            "install", so unless you need to run some other npm command,
+                            you can remove this whole <configuration> section.
+                            -->
+                            <arguments>install</arguments>
                         </configuration>
                     </execution>
                 </executions>

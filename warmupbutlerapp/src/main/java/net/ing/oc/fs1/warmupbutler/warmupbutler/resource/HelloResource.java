@@ -15,7 +15,7 @@ public class HelloResource {
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public Response hello() {
-        return Response.ok().entity("Hello!").build();
+        return Response.ok().entity("Hello from warmupbutler!").build();
     }
 
     @GET

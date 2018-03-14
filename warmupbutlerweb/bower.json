@@ -1,11 +1,10 @@
 {
   "name": "warmupbutlerweb",
-  "version": "1.0.0",
+  "description": "Polymer2 front end for Warmup Butler",
   "main": "index.html",
-  "license": "MIT",
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.0",
-    "@bower_components/iron-ajax": "PolymerElements/iron-ajax#^2.1.3"
+    "iron-ajax": "^2.1.3"
   },
   "devDependencies": {
     "web-component-tester": "Polymer/web-component-tester#^6.0.0",

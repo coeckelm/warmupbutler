@@ -1,6 +1,7 @@
 {
   "name": "warmupbutlerweb",
   "short_name": "warmupbutlerweb",
+  "description": "Polymer2 front end for Warmup Butler",
   "start_url": "/",
   "display": "standalone"
 }
