@@ -24,8 +24,25 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>
 
-  <modules>
-    <module>warmupbutlerweb</module>
-    <module>warmupbutlerapp</module>
-  </modules>
+  <profiles>
+    <profile>
+      <id>api-only</id>
+      <modules>
+        <module>warmupbutlerapp</module>
+      </modules>
+    </profile>
+    <profile>
+      <id>web-only</id>
+      <modules>
+        <module>warmupbutlerweb</module>
+      </modules>
+    </profile>
+    <profile>
+      <id>full-app</id>
+      <modules>
+        <module>warmupbutlerweb</module>
+        <module>warmupbutlerapp</module>
+      </modules>
+    </profile>
+  </profiles>
 </project>
