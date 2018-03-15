@@ -101,7 +101,7 @@
 		<resources>
 			<resource>
 				<directory>../warmupbutlerweb</directory>
-				<targetPath>classes/static</targetPath>
+				<targetPath>static</targetPath>
 				<excludes>
 					<exclude>target</exclude>
 					<exclude>tools</exclude>
