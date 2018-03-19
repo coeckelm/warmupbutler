@@ -1,0 +1,40 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="warmupbutler-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+    <b>Use the force Mohamed!!</b>
+    <iron-ajax
+            auto
+            url="/warmupbutler/api/hello"
+            handle-as="json"
+            on-response="handleResponse"
+            debounce-duration="300" last-response="{{ajaxResponse}}"></iron-ajax>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class WarmupbutlerApp extends Polymer.Element {
+      static get is() { return 'warmupbutler-app'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'warmupbutler-app'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(WarmupbutlerApp.is, WarmupbutlerApp);
+  </script>
+</dom-module>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+    <groupId>net.ing.oc.fs1.warmupbutler</groupId>
+    <artifactId>warmupbutler</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+
+    <name>warmupbutler</name>
+    <description>Demo project for Spring Boot</description>
+
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.0.0.RELEASE</version>
+  </parent>
+
+  <properties>
+    <java.version>1.8</java.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+  </properties>
+
+  <profiles>
+    <profile>
+      <id>api-only</id>
+      <modules>
+        <module>warmupbutlerapp</module>
+      </modules>
+    </profile>
+    <profile>
+      <id>web-only</id>
+      <modules>
+        <module>warmupbutlerweb</module>
+      </modules>
+    </profile>
+    <profile>
+      <id>full-app</id>
+      <activation>
+        <property>
+          <name>env.DYNO</name>
+        </property>
+      </activation>
+      <modules>
+        <module>warmupbutlerweb</module>
+        <module>warmupbutlerapp</module>
+      </modules>
+    </profile>
+  </profiles>
+</project>
