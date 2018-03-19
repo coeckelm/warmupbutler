@@ -32,12 +32,12 @@
                         <configuration>
                             <!-- See https://nodejs.org/en/download/ for latest node and npm (lts) versions -->
                             <nodeVersion>v9.8.0</nodeVersion>
-                            <npmVersion>v5.6.0</npmVersion>
+                            <npmVersion>5.6.0</npmVersion>
                             <installDirectory>tools</installDirectory>
                         </configuration>
                     </execution>
                     <execution>
-                        <id>run npm install</id>
+                        <id>install bower</id>
                         <goals>
                             <goal>npm</goal>
                         </goals>
@@ -50,7 +50,7 @@
                             "install", so unless you need to run some other npm command,
                             you can remove this whole <configuration> section.
                             -->
-                            <arguments>install</arguments>
+                            <arguments>install bower</arguments>
                             <installDirectory>tools</installDirectory>
                         </configuration>
                     </execution>
@@ -62,13 +62,13 @@
 
                         <!-- optional: default phase is "generate-resources" -->
                         <phase>generate-resources</phase>
-
                         <configuration>
                             <!-- optional: The default argument is actually
                             "install", so unless you need to run some other npm command,
                             you can remove this whole <configuration> section.
                             -->
                             <arguments>install</arguments>
+                            <installDirectory>tools</installDirectory>
                         </configuration>
                     </execution>
                 </executions>
