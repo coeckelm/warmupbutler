@@ -39,6 +39,11 @@
     </profile>
     <profile>
       <id>full-app</id>
+      <activation>
+        <property>
+          <name>env.DYNO</name>
+        </property>
+      </activation>
       <modules>
         <module>warmupbutlerweb</module>
         <module>warmupbutlerapp</module>
