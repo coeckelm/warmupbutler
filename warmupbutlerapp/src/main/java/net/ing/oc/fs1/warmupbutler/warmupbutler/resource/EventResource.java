@@ -4,21 +4,20 @@ import net.ing.oc.fs1.warmupbutler.warmupbutler.model.Event;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
-import org.springframework.stereotype.Component;
 
 import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.Optional;
 
-@Component
-
+@Path("/event")
 public class EventResource {
+
     @Autowired
     private RedisTemplate redisTemplate;
 
     @GET
-    @Path("/event/{eventId}")
+    @Path("/{eventId}")
     @Produces({MediaType.APPLICATION_JSON})
     public String getEvent(@PathParam("eventId") String eventId) {
         ValueOperations values = redisTemplate.opsForValue();
@@ -30,7 +29,6 @@ public class EventResource {
         return "Event not found";
     }
 
-
     @POST
     @Path("/event")
     @Produces({MediaType.APPLICATION_JSON})
@@ -41,9 +39,4 @@ public class EventResource {
         return "Event created: " + event.getDescription();
     }
 
-
-
 }
-
-
-
