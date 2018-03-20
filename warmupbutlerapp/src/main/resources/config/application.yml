@@ -1,3 +1,6 @@
+server:
+  port: ${PORT:8080}
+
 logging.level:
     org.springframework: INFO
 
@@ -13,7 +16,7 @@ management:
 # ===================================================================
 
 warmupbutler:
-  # Add the redis connection-related properties in your personal settings.xml file under 'api-only' profile.
+  # Add the redis connection-related properties in your personal settings.xml file, inside the 'api-only' profile.
   redis:
     host: @redis.host@
     password: @redis.password@
