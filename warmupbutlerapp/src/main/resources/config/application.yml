@@ -18,6 +18,6 @@ management:
 warmupbutler:
   # Add the redis connection-related properties in your personal settings.xml file, inside the 'api-only' profile.
   redis:
-    host: @redis.host@
-    password: @redis.password@
-    port: @redis.port@
+      host: @REDIS_HOST@
+    password: @REDIS_PW@
+    port: @REDIS_PORT@
