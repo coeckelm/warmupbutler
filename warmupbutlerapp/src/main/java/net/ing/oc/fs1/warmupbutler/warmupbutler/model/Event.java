@@ -2,11 +2,17 @@ package net.ing.oc.fs1.warmupbutler.warmupbutler.model;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.redis.core.RedisHash;
+
 import javax.validation.constraints.Future;
 import java.io.Serializable;
 import java.util.Date;
 
+@RedisHash("Event")
 public class Event implements Serializable {
+
+    @Id
     private String eventId;
     private String eventName;
     @Future
