@@ -1,4 +1,4 @@
-package net.ing.oc.fs1.warmupbutler.warmupbutler.config;
+package net.ing.oc.fs1.warmupbutler.configuration;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.validation.annotation.Validated;

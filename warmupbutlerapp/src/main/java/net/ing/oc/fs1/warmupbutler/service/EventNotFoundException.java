@@ -1,4 +1,4 @@
-package net.ing.oc.fs1.warmupbutler.warmupbutler.service;
+package net.ing.oc.fs1.warmupbutler.service;
 
 public class EventNotFoundException extends RuntimeException {
 
