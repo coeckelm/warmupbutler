@@ -14,18 +14,16 @@
  * limitations under the License.
  */
 
-package net.ing.oc.fs1.warmupbutler.warmupbutler;
+package net.ing.oc.fs1.warmupbutler;
 
 import lombok.extern.slf4j.Slf4j;
-import net.ing.oc.fs1.warmupbutler.warmupbutler.config.ApplicationProperties;
+import net.ing.oc.fs1.warmupbutler.configuration.ApplicationProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @EnableConfigurationProperties(ApplicationProperties.class)
-@ComponentScan
 @Slf4j
 public class WarmUpButlerApplication {
 
