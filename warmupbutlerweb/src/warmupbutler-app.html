@@ -1,0 +1,100 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/paper-fab/paper-fab.html">
+
+<link rel="import" href="elements/warmupbutler-new-event-modal.html">
+<link rel="import" href="elements/warmupbutler-event-list.html">
+
+<dom-module id="warmupbutler-app">
+
+    <template>
+
+        <style>
+            :host {
+                --app-primary-color: #4285f4;
+                --app-secondary-color: black;
+                height: 100%;
+                display: block;
+            }
+
+            app-drawer-layout:not([narrow]) [drawer-toggle] {
+                display: none;
+            }
+
+            app-header {
+                color: #fff;
+                background-color: var(--app-primary-color);
+            }
+
+            app-header paper-icon-button {
+                --paper-icon-button-ink-color: white;
+            }
+
+            .drawer-list a {
+                display: block;
+                padding: 0 16px;
+                text-decoration: none;
+                color: var(--app-secondary-color);
+                line-height: 40px;
+            }
+
+            paper-fab {
+                position: fixed;
+                right: 20px;
+                bottom: 20px;
+            }
+        </style>
+
+        <!-- Add the "fullbleed" attribute to app-drawer-layout to make it fit the size of its container. -->
+        <app-drawer-layout fullbleed narrow="{{narrow}}">
+
+            <!--<app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]"></app-drawer>-->
+
+            <app-header-layout has-scrolling-region>
+
+                <app-header slot="header" fixed shadow>
+                    <app-toolbar>
+                        <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
+                        <div main-title>Warmupbutler</div>
+                        <paper-icon-button icon="search"></paper-icon-button>
+                    </app-toolbar>
+                </app-header>
+
+                <warmupbutler-event-list></warmupbutler-event-list>
+
+            </app-header-layout>
+
+            <paper-fab icon="add" on-tap="openNewEventModal"></paper-fab>
+
+        </app-drawer-layout>
+
+        <warmupbutler-new-event-modal id="newEventModal" modal></warmupbutler-new-event-modal>
+
+    </template>
+
+    <script>
+
+        class WarmupbutlerApp extends Polymer.Element {
+
+            static get is() {
+                return 'warmupbutler-app';
+            }
+
+            openNewEventModal() {
+                this.$.newEventModal.open();
+            }
+
+        }
+
+        window.customElements.define(WarmupbutlerApp.is, WarmupbutlerApp);
+
+    </script>
+
+</dom-module>

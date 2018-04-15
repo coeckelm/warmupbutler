@@ -1,0 +1,207 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/device-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/communication-icons.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-toast/paper-toast.html">
+
+<script src="../../bower_components/moment/min/moment.min.js"></script>
+
+<dom-module id="warmupbutler-event">
+
+    <template>
+
+        <style include="iron-flex iron-flex-alignment iron-flex-factors"></style>
+
+        <style>
+
+            paper-dialog > *, paper-toast {
+                font-family: 'Questrial', sans-serif;
+            }
+
+            .event-container {
+                @apply --layout-justified;
+                margin: 24px;
+                padding: 16px;
+                background-color: #fafafa;
+                color: #757575;
+                border-radius: 5px;
+                box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+                cursor: pointer;
+                border: 5px solid #ffffff;
+                transition: all .2s ease-in-out;
+            }
+
+            .event:hover {
+                transform: scale(1.02);
+            }
+
+            p {
+                text-align: justify;
+                text-justify: inter-word;
+            }
+
+            hr {
+                border: none;
+                border-top: 1px solid #ededed;
+            }
+
+            div.event-date {
+                padding: 4px;
+                border-radius: 2px;
+                background-color: #dddddd;
+                line-height: 1.5;
+                text-align: center;
+            }
+
+            div.event-month {
+                font-weight: 600;
+                font-size: 1.1rem;
+                opacity: 0.5;
+            }
+
+            div.event-day {
+                font-size: 2.1rem;
+            }
+
+            div.event-info {
+                margin-left: 25px;
+            }
+
+            p.event-name {
+                font-size: 28px;
+                margin: 0 0 5px;
+            }
+
+            div.event-time, div.event-location {
+                display: inline-block;
+            }
+            div.event-time span, div.event-location span {
+                vertical-align: bottom;
+            }
+
+        </style>
+
+        <div class="event-container">
+            <div class="layout vertical">
+                <div class="layout horizontal justified">
+                    <div class="flex-1">
+                        <div class="event-date">
+                            <div class="event-month">[[getMonth()]]</div>
+                            <div class="event-day">[[getDay()]]</div>
+                        </div>
+                    </div>
+                    <div class="flex-9">
+                        <div class="event-info">
+                            <p class="event-name">[[event.name]]</p>
+                            <div class="event-time">
+                                <iron-icon icon="device:access-time"></iron-icon>
+                                <span>[[getTime()]]</span>
+                            </div>
+                            <div class="event-location">
+                                <iron-icon icon="communication:location-on"></iron-icon>
+                                <span>[[event.location]]</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-1">
+                        <div class="actions">
+                            <paper-icon-button icon="create"></paper-icon-button>
+                            <paper-icon-button icon="delete" on-tap="openDeleteEventConfirmationModal"></paper-icon-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layout vertical">
+                <div>
+                    <p>[[event.description]]</p>
+                </div>
+            </div>
+        </div>
+
+        <paper-dialog id="deleteEventConfirmationModal">
+            <h2>Delete event</h2>
+            <p>Are you sure you want to remove this event?</p>
+            <div class="buttons">
+                <paper-button dialog-dismiss>No</paper-button>
+                <paper-button on-tap="deleteEvent" autofocus>Delete</paper-button>
+            </div>
+        </paper-dialog>
+
+        <paper-toast id="toast"></paper-toast>
+
+        <iron-ajax id="deleteEventAjax" method="delete"></iron-ajax>
+
+    </template>
+
+    <script>
+
+        class WarmupbutlerEvent extends Polymer.Element {
+
+            static get is() {
+                return 'warmupbutler-event';
+            }
+
+            static get properties() {
+                return {
+                    event: Object,
+                    index: Number
+                }
+            }
+
+            openDeleteEventConfirmationModal() {
+                this.$.deleteEventConfirmationModal.open();
+            }
+
+            deleteEvent() {
+                this.$.deleteEventAjax.url = '/warmupbutler/api/events/' + this.event.id;
+                let request = this.$.deleteEventAjax.generateRequest();
+                let scope = this;
+                request.completes.then(function(req) {
+                        console.log(req.status);
+                        if (req.status === 204) {
+                            // Request succeeded.
+                            scope.dispatchEvent(new CustomEvent('list-event-change', {
+                                bubbles: true,
+                                composed: true,
+                                detail: {
+                                    message: 'Event deleted successfully'
+                                }
+                            }));
+                            scope.$.deleteEventConfirmationModal.close();
+                        }
+                    }, function(error) {
+                        // Request failed.
+                        console.log(error);
+                        scope.$.deleteEventConfirmationModal.close();
+                        scope.$.toast.text = 'An error occurred while attempting to delete the selected event';
+                        scope.$.toast.show();
+                    }
+                )
+            }
+
+            getIndex() {
+                return this.index + 1;
+            }
+
+            getMonth() {
+                return moment(this.event.startDateTime).format('MMM');
+            }
+
+            getDay() {
+                return moment(this.event.startDateTime).format('D');
+            }
+
+            getTime() {
+                return moment(this.event.startDateTime).format('HH:mm');
+            }
+        }
+
+        customElements.define(WarmupbutlerEvent.is, WarmupbutlerEvent);
+
+    </script>
+
+</dom-module>

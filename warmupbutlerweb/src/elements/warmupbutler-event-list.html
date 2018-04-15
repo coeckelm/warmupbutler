@@ -1,0 +1,126 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../../bower_components/paper-styles/shadow.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../bower_components/iron-icons/device-icons.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/paper-toast/paper-toast.html">
+
+<link rel="import" href="warmupbutler-event.html">
+
+<dom-module id="warmupbutler-event-list">
+
+    <template>
+
+        <style include="iron-flex iron-flex-alignment iron-flex-factors"></style>
+        <style>
+            paper-toast {
+                font-family: 'Questrial', sans-serif;
+            }
+            .big {
+                --iron-icon-height: 64px;
+                --iron-icon-width: 64px;
+            }
+            iron-icon {
+                color: hsl(0, 0%, 50%);
+            }
+            .center-text {
+                text-align: center;
+            }
+            .empty-event-list-container {
+                height: 100%;
+            }
+        </style>
+
+        <template is="dom-if" if="{{!_hasEvents}}">
+            <div class="horizontal layout center-justified empty-event-list-container">
+                <div class="vertical layout center-justified">
+                    <div class="center-text">
+                        <iron-icon class="big" icon="event"></iron-icon>
+                        <p>There are no events.</p>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template is="dom-if" if="{{_hasEvents}}">
+            <div class="layout horizontal layout-start">
+                <div class="flex-2"></div>
+                <div class="flex-8">
+                    <div class="">
+                        <dom-repeat items="[[events]]" as="event">
+                            <template>
+                                <warmupbutler-event event="[[event]]" index="[[index]]"></warmupbutler-event>
+                            </template>
+                        </dom-repeat>
+                    </div>
+                </div>
+                <div class="flex-2"></div>
+            </div>
+        </template>
+
+        <iron-ajax
+                id="fetchEventsAjax"
+                url="/warmupbutler/api/events"
+                method="get"
+                handle-as="json"
+                on-response="handleResponse"></iron-ajax>
+
+        <paper-toast id="toast"></paper-toast>
+
+    </template>
+
+    <script>
+
+        class WarmupbutlerEventList extends Polymer.Element {
+
+            ready() {
+                super.ready();
+                // Fetch list of events.
+                this.$.fetchEventsAjax.generateRequest();
+                this.addEventListener('list-event-change', (e) => this._onEventListChanged(e));
+            }
+
+            static get is() {
+                return 'warmupbutler-event-list';
+            }
+
+            static get properties() {
+                return {
+                    events: {
+                        type: Array,
+                        value: []
+                    },
+                    _hasEvents: {
+                        type: Boolean,
+                        computed: '_computeHasEvent(events.length)',
+                        value: true
+                    }
+                }
+            }
+
+            _computeHasEvent(numbEvents) {
+                return numbEvents > 0;
+            }
+
+            _onEventListChanged(e) {
+                console.log(e);
+                if (e.detail.message) {
+                    this.$.toast.text = e.detail.message;
+                    this.$.toast.show();
+                }
+                this.$.fetchEventsAjax.generateRequest();
+            }
+
+            handleResponse(req) {
+                this.set('events', req.detail.response);
+            }
+
+        }
+
+        customElements.define(WarmupbutlerEventList.is, WarmupbutlerEventList);
+
+    </script>
+
+</dom-module>

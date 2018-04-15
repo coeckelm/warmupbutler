@@ -1,0 +1,161 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
+<link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-shared-styles.html">
+
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/iron-form/iron-form.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
+<link rel="import" href="../../bower_components/app-datepicker/app-datepicker-dialog.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../bower_components/iron-icons/communication-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/device-icons.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+
+<script src="../../bower_components/moment/min/moment.min.js"></script>
+
+<dom-module id="warmupbutler-new-event-modal">
+
+    <template>
+        <style include="iron-flex iron-flex-alignment iron-flex-factors"></style>
+        <style include="paper-dialog-shared-styles">
+            :host {
+                font-family: 'Questrial', sans-serif;
+                padding: 20px;
+                width: 700px;
+            }
+            app-datepicker {
+                background: none;
+            }
+            paper-input[type="date"], paper-input[type="time"] {
+                --paper-input-container-input-webkit-calendar-picker-indicator: {
+                    display: none;
+                };
+                --paper-input-container-input-webkit-clear: {
+                    display: none;
+                }
+            }
+            paper-input, paper-textarea {
+                --paper-input-container-input: {
+                    font-family: 'Questrial', sans-serif;
+                };
+            }
+            iron-icon {
+                color: hsl(0, 0%, 50%);
+            }
+        </style>
+
+        <h2>Create event</h2>
+
+        <iron-ajax
+                id="createEventAjax"
+                method="post"
+                content-type="application/json"
+                handle-as="json"
+                on-response="handleEventCreationResponse"
+                on-error="handleEventCreationError">
+        </iron-ajax>
+
+        <iron-form>
+            <form>
+                <paper-input name="name" label="Name" value="{{event.name}}" required auto-validate></paper-input>
+                <paper-input name="location" label="Location" value="{{event.location}}" required auto-validate>
+                    <iron-icon icon="communication:location-on" slot="suffix"></iron-icon>
+                </paper-input>
+                <div class="layout horizontal layout-start">
+                    <div class="flex-7">
+                        <paper-input type="date" name="start-date" label="Start date" value="{{eventStartDate}}">
+                            <iron-icon icon="event" slot="suffix"></iron-icon>
+                        </paper-input>
+                    </div>
+                    <div class="flex-1"></div> <!-- Workaround -->
+                    <div class="flex-4">
+                        <paper-input type="time" name="start-time" label="Start time" value="{{eventStartTime}}">
+                            <iron-icon icon="device:access-time" slot="suffix"></iron-icon>
+                        </paper-input>
+                    </div>
+                </div>
+                <paper-textarea name="description" label="Description" value="{{event.description}}"></paper-textarea>
+            </form>
+        </iron-form>
+        <div class="buttons">
+            <paper-button dialog-dismiss>Cancel</paper-button>
+            <paper-button on-tap="submitForm">Create</paper-button>
+        </div>
+
+    </template>
+
+    <script>
+
+        class WarmupbutlerNewEventModal extends Polymer.mixinBehaviors([Polymer.PaperDialogBehavior], Polymer.Element) {
+
+            static get is() {
+                return 'warmupbutler-new-event-modal';
+            }
+
+            static get properties() {
+                return {
+                    event: {
+                        type: Object,
+                        value: {
+                            id: null,
+                            name: null,
+                            description: null,
+                            location: null,
+                            startDateTime: null
+                        }
+                    },
+                    eventStartDate: String,
+                    eventStartTime: String
+                };
+            }
+
+            static get observers() {
+                return [
+                    'computeStartDateTime(eventStartDate, eventStartTime)'
+                ]
+            }
+
+            computeStartDateTime(eventStartDate, eventStartTime) {
+                if(eventStartDate != null) {
+                    let dateParts = eventStartDate.split('-');
+                    let timeParts = eventStartTime != null ? eventStartTime.split(':') : ['00', '00'];
+                    if(dateParts && timeParts) {
+                        dateParts[1] = dateParts[1] - 1;
+                        this.event.startDateTime = moment(dateParts.concat(timeParts)).format('YYYY-MM-DDTHH:mm:ss');
+                    }
+                } else {
+                    this.event.startDateTime = null;
+                }
+            }
+
+            submitForm() {
+                console.log('Event submitted: ', this.event);
+                this.$.createEventAjax.url = '/warmupbutler/api/events';
+                this.$.createEventAjax.body = this.event;
+                this.$.createEventAjax.generateRequest();
+            }
+
+            handleEventCreationResponse(req) {
+                console.log(req.detail.response);
+                this.dispatchEvent(new CustomEvent('list-event-change', {
+                    bubbles: true,
+                    composed: true,
+                    detail: {
+                        message: 'Event created successfully'
+                    }
+                }));
+                this.close();
+            }
+
+            handleEventCreationError(error) {
+                this.close();
+            }
+        }
+
+        window.customElements.define(WarmupbutlerNewEventModal.is, WarmupbutlerNewEventModal);
+
+    </script>
+
+</dom-module>
